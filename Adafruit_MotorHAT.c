@@ -91,7 +91,7 @@ int Adafruit_StepperMotor_oneStep(Adafruit_StepperMotor *motor, Direction dir, S
         step += (dir == FORWARD) ? 1 : -1;
     } else if (style == MICROSTEP) {
         step += (dir == FORWARD) ? 1 : -1;
-        step %= (steps_per_rev * MICROSTEPS);
+        step %= (steps_per_rev * MICROSTEP);
     }
     motor->currentstep = step % steps_per_rev;
 

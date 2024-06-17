@@ -19,7 +19,10 @@ typedef enum {
     MICROSTEP
 } Style;
 
+typedef struct Adafruit_MotorHAT Adafruit_MotorHAT;
+
 typedef struct {
+    Adafruit_MotorHAT *hat;  // Add this line
     int PWMA;
     int AIN2;
     int AIN1;
@@ -35,17 +38,18 @@ typedef struct {
 } Adafruit_StepperMotor;
 
 typedef struct {
+    Adafruit_MotorHAT *hat;  // Add this line
     int PWM;
     int IN2;
     int IN1;
     int motornum;
 } Adafruit_DCMotor;
 
-typedef struct {
+struct Adafruit_MotorHAT {
     int _frequency;
     Adafruit_StepperMotor steppers[2];
     Adafruit_DCMotor dcs[4];
-} Adafruit_MotorHAT;
+};
 
 // Function prototypes
 void Adafruit_MotorHAT_init(Adafruit_MotorHAT *hat, int addr, int freq, int i2c, int i2c_bus);
