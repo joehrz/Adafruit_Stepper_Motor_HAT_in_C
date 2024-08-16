@@ -8,13 +8,13 @@ Adafruit_MotorHAT hat;
 
 volatile sig_atomic_t keepRunning = 1;
 
-void ctrl_c_handler(int s){
+void ctrl_c_handler(int s) {
     printf("Caught signal %d\n", s);
-    Adafruit_MotorHAT_resetAll(&hat); // Call the resetAll function with hat as an argument
-    keepRunning = 0; // Set the flag to 0 to break the loop
+    Adafruit_MotorHAT_resetAll(&hat); // Reset all motors
+    keepRunning = 0; // Set the flag to stop the loop
 }
 
-int main(int argc, char** argv) {
+int main() {
     // Register the signal handler
     signal(SIGINT, ctrl_c_handler);
 
@@ -27,35 +27,32 @@ int main(int argc, char** argv) {
         fprintf(stderr, "Failed to get stepper motor\n");
         return 1;
     }
-    printf("Got stepper\n");
+    printf("Got stepper motor instance\n");
 
     // Set the speed of the stepper motor to 30 RPM
     Adafruit_StepperMotor_setSpeed(myStepper, 30);
 
-    // Main loop for stepping the motor
+    // Optional: Loop for continuous motor movement until Ctrl+C
     while (keepRunning) {
-        printf("Single coil steps\n");
-        Adafruit_StepperMotor_step(myStepper, 100, FORWARD, SINGLE);
-        Adafruit_StepperMotor_step(myStepper, 100, BACKWARD, SINGLE);
+        printf("Moving motor forward 10 steps (SINGLE step mode)\n");
+        Adafruit_StepperMotor_step(myStepper, 10, FORWARD, SINGLE);
+        
+        usleep(500000);  // Sleep for 500ms between movements
 
-        printf("Double coil steps\n");
-        Adafruit_StepperMotor_step(myStepper, 100, FORWARD, DOUBLE);
-        Adafruit_StepperMotor_step(myStepper, 100, BACKWARD, DOUBLE);
-
-        printf("Interleaved coil steps\n");
-        Adafruit_StepperMotor_step(myStepper, 100, FORWARD, INTERLEAVE);
-        Adafruit_StepperMotor_step(myStepper, 100, BACKWARD, INTERLEAVE);
-
-        printf("Microsteps\n");
-        Adafruit_StepperMotor_step(myStepper, 100, FORWARD, MICROSTEP);
-        Adafruit_StepperMotor_step(myStepper, 100, BACKWARD, MICROSTEP);
-
-        usleep(100000); // Sleep for 100ms to prevent busy waiting
+        printf("Moving motor backward 10 steps (SINGLE step mode)\n");
+        Adafruit_StepperMotor_step(myStepper, 10, BACKWARD, SINGLE);
+        
+        usleep(500000);  // Sleep for 500ms between movements
     }
 
     // Additional cleanup if necessary
     printf("Exiting program\n");
-    Adafruit_MotorHAT_resetAll(&hat); // Call the resetAll function with hat as an argument
+    Adafruit_MotorHAT_resetAll(&hat); // Reset all motors before exiting
 
     return 0;
 }
+
+
+
+
+

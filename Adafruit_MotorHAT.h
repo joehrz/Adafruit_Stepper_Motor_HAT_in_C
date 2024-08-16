@@ -3,6 +3,7 @@
 
 #include <wiringPi.h>
 #include <softPwm.h>
+#include "PWM.h"  // Ensure you include the PWM header to use the PWM type
 
 // Define enums for direction and style
 typedef enum {
@@ -22,7 +23,7 @@ typedef enum {
 typedef struct Adafruit_MotorHAT Adafruit_MotorHAT;
 
 typedef struct {
-    Adafruit_MotorHAT *hat;  // Add this line
+    Adafruit_MotorHAT *hat;  // Pointer to parent HAT controller
     int PWMA;
     int AIN2;
     int AIN1;
@@ -38,7 +39,7 @@ typedef struct {
 } Adafruit_StepperMotor;
 
 typedef struct {
-    Adafruit_MotorHAT *hat;  // Add this line
+    Adafruit_MotorHAT *hat;  // Pointer to parent HAT controller
     int PWM;
     int IN2;
     int IN1;
@@ -47,8 +48,9 @@ typedef struct {
 
 struct Adafruit_MotorHAT {
     int _frequency;
-    Adafruit_StepperMotor steppers[2];
-    Adafruit_DCMotor dcs[4];
+    PWM pwm;  // Add this line to store the PWM controller
+    Adafruit_StepperMotor steppers[2];  // Two stepper motors
+    Adafruit_DCMotor dcs[4];            // Four DC motors
 };
 
 // Function prototypes
@@ -68,3 +70,4 @@ void Adafruit_DCMotor_run(Adafruit_DCMotor *motor, Direction dir);
 void Adafruit_DCMotor_setSpeed(Adafruit_DCMotor *motor, int speed);
 
 #endif // ADAFRUIT_MOTORHAT_H
+
