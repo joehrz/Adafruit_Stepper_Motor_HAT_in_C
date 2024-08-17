@@ -4,29 +4,29 @@
 #include <signal.h>
 #include <unistd.h> // for usleep
 
+// Declare the global Motor HAT object
 Adafruit_MotorHAT hat;
 
+// Flag to handle Ctrl+C signal for a clean exit
 volatile sig_atomic_t keepRunning = 1;
 
+// Signal handler to catch Ctrl+C
 void ctrl_c_handler(int s) {
     printf("Caught signal %d\n", s);
-    Adafruit_MotorHAT_resetAll(&hat); // Reset all motors
+    Adafruit_MotorHAT_resetAll(&hat); // Reset all motors before exit
     keepRunning = 0; // Set the flag to stop the loop
 }
 
 int main() {
-    // Register the signal handler
+    // Register the signal handler for Ctrl+C (SIGINT)
     signal(SIGINT, ctrl_c_handler);
 
-    // Initialize the Motor HAT
-    Adafruit_MotorHAT_init(&hat, 0x60, 1600, -1, -1);
+    // Initialize the Motor HAT at I2C address 0x60 and PWM frequency 1600
+    Adafruit_MotorHAT_init(&hat, 0x60, 1526);
 
-    // Get stepper motor instance from port #1
-    Adafruit_StepperMotor* myStepper = Adafruit_MotorHAT_getStepper(&hat, 1);
-    if (myStepper == NULL) {
-        fprintf(stderr, "Failed to get stepper motor\n");
-        return 1;
-    }
+    // Get the stepper motor instance from port #1
+    Adafruit_StepperMotor* myStepper = &(hat.steppers[0]);
+
     printf("Got stepper motor instance\n");
 
     // Set the speed of the stepper motor to 30 RPM
@@ -51,6 +51,7 @@ int main() {
 
     return 0;
 }
+
 
 
 
