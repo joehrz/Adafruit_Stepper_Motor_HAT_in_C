@@ -33,6 +33,6 @@ This project provides a C library for controlling stepper and DC motors using th
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/Adafruit_MotorHAT_C_Library.git
+git clone https://github.com/Dxxc/Adafruit_Stepper_Motor_HAT_in_C.git
 cd Adafruit_MotorHAT_C_Library
 
