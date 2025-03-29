@@ -33,7 +33,7 @@ This project provides a C library for controlling stepper and DC motors using th
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Dxxc/Adafruit_Stepper_Motor_HAT_in_C.git
+git clone https://github.com/joehrz/Adafruit_Stepper_Motor_HAT_in_C.git
 cd Adafruit_MotorHAT_C_Library
 Make sure you have libi2c-dev installed, i.e. "sudo apt-get install libi2c-dev"
 
