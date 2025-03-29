@@ -28,7 +28,7 @@
 #define PWM_SUCCESS 0
 #define PWM_ERROR -1
 
-// Optional: Reference for the default frequency
+// Reference for the default frequency
 #define PWM_FREQUENCY 1600
 
 typedef struct {
@@ -42,7 +42,7 @@ int PWM_setPWM(PWM *pwm, unsigned short pin, unsigned short on, unsigned short o
 int PWM_setPin(PWM *pwm, unsigned short pin, unsigned short value);
 int PWM_getI2cIdentifier(PWM *pwm);
 
-// Optional: Add this if exposing the frequency setting function
+// Add this if exposing the frequency setting function
 void PWM_setPWMFreq(PWM *pwm, float freq);
 
 #endif // PWM_H
